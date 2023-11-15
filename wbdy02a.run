@@ -1,0 +1,34 @@
+#
+E=wbdy02a
+DATA=/vortexfs1/home/mspall/pe/mit/wbdy
+SRC=${DATA}/binary
+#RST=/scratch/mspall/restarts/umoc01d
+rm data.*
+rm mitgcm
+rm eedata
+rm *.bin
+rm *.forcing
+rm *.init
+rm *.data
+rm *.meta
+
+cp ${DATA}/${E}/data data
+cp ${DATA}/${E}/data.diagnostics data.diagnostics
+cp ${DATA}/${E}/data.pkg data.pkg
+cp ${DATA}/${E}/data.layers data.layers
+cp ${DATA}/${E}/eedata eedata
+cp ${DATA}/${E}/topog.bin topog.bin
+cp ${DATA}/${E}/SST.bin SST.bin
+
+cp ${DATA}/${E}/zonaltau.bin zonaltau.bin
+
+#cp ${RST}/pickup.0000864000.data .
+#cp ${RST}/pickup.0000864000.meta .
+
+
+cp ${SRC}/VEC864x864x60np288 mitsrc
+#
+
+cp ${DATA}/${E}/${E}.sh ${E}.sh
+sbatch ${E}.sh
+

@@ -1,0 +1,29 @@
+#
+DIR=wbdy
+SRC=/vortexfs1/home/mspall/pe/mit/MITgcm_c65l
+BIN=/vortexfs1/home/mspall/pe/mit/${DIR}/binary
+MODS=/vortexfs1/home/mspall/pe/mit/${DIR}/mods
+CODE=/vortexfs1/home/mspall/pe/mit/${DIR}/code
+CODE2=/vortexfs1/home/mspall/pe/mit/${DIR}/codemom
+rm -r ${MODS}
+mkdir ${MODS}
+cp ${CODE}/* ${MODS}/.
+cp ${CODE2}/* ${MODS}/.
+OPTS=/vortexfs1/home/mspall/pe/mit/newsetup/build_options_pgi
+cp ${CODE}/SIZE.h ${SRC}/model/inc/
+cp ${CODE}/CPP_OPTIONS.h ${SRC}/model/inc/
+cp ${CODE}/CPP_EEOPTIONS.h ${SRC}/eesupp/inc/
+#
+cd ${SRC}/bin
+${SRC}/tools/genmake2 -of=${OPTS} -mods=/vortexfs1/home/mspall/pe/mit/${DIR}/mods
+module load pgi
+module load openmpi/pgi/2.1.2
+make Clean
+make depend
+make
+#
+cp ${SRC}/bin/mitgcmuv ${BIN}/VEC864x864x60np36
+#cp ${SRC}/bin/mitgcmuv ${BIN}/VEC792x672x65np36
+#cp ${SRC}/bin/mitgcmuv ${BIN}/VEC864x864x60np288
+#cp ${SRC}/bin/mitgcmuv ${BIN}/VEC600x600x50np288
+#
